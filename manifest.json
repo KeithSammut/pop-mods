@@ -1,0 +1,31 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "Keith Sammut",
+  "name": "Poptropica Mods",
+  "version": "1.0",
+  "description": "© Keith Sammut 2016 - Froot Loops Poptropica Mod - A client that swaps objects",
+  "icons": {
+    "16": "icons/icon-16x16.png",
+    "48": "icons/icon-48x48.png",
+    "128": "icons/icon-128x128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/icon-16x16.png"
+    }
+  },
+  "devtools_page": "src/ui/devtools.html",
+  "options_page": "src/ui/options.html",
+  "background": {
+    "page": "src/background/background.html"
+  },
+  "content_scripts": [{
+      "matches" : ["*://*/*"],
+      "js": ["src/inject/scriptInjector.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+  }],
+  "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>", "tabs"],
+  "manifest_version": 2
+}

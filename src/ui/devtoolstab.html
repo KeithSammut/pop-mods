@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Mods</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/on-off-switch.css">
+<link rel="stylesheet" href="../../lib/ace/ace.css">
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Luckiest+Guy" />
+</head>
+<body>
+<template style="display:none" id="onOffSwitchTemplate">
+    <style>@import "css/on-off-switch.css";</style>
+    <div class="onoffswitch">
+        <input style="display:none" type="checkbox" class="onoffswitch-checkbox" checked>
+        <label style="display:none" class="onoffswitch-label">
+            <span class="onoffswitch-inner">
+                <div class="onoffswitch-on"></div>
+                <div class="onoffswitch-off"></div>
+            </span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>
+</template>
+
+<template id="domainTemplate">
+    <div class="domainContainer">
+        <div class="domainHeader">
+            <div class="domainText">
+            </div>
+            <div class="domain">
+                <input style="display:none" type="input" class="domainMatchInput" placeholder="Tab Match URL">
+            </div>
+            <div class="addRule">
+                <button style="display:none" class="btn addRuleBtn"></button>
+            </div>
+            <div class="addFileRule">
+                <button style="display:none" class="btn addFileRuleBtn"></button>
+            </div>
+            <div class="addInjectRule">
+                <button style="display:none" class="btn addInjectRuleBtn"></button>
+            </div>
+            <div class="switch">
+                <on-off-switch style="display:none" class="domainOnOff"></on-off-switch>
+            </div>
+            <div class="delete">
+                <button style="display:none" class="deleteBtn btn sym-btn">&#215</button>
+            </div>
+        </div>
+        <div class="overrideRules">
+
+        </div>
+    </div>
+</template>
+
+<template id="overrideTemplate">
+    <div class="ruleContainer normalOverride">
+        <div class="handle">
+            <div class="arrow-up" style="display:none"></div><div class="arrow-down" style="display:none"></div>
+        </div>
+        <div class="match">
+        </div>
+        <div class="rule">
+            <input style="display:none" type="input" class="matchInput" placeholder="Match URL" data-suggest>
+        </div>
+        <div class="arrow">
+        </div>
+        <div class="rule">
+            <input style="display:none" type="input" class="replaceInput" placeholder="Replace URL">
+        </div>
+        <div style="display:none" class="switch" style="display:none">
+            <on-off-switch style="display:none" class="ruleOnOff"></on-off-switch>
+        </div>
+        <div style="display:none" class="delete" style="display:none">
+            <button style="display:none" class="btn sym-btn">&#215</button>
+        </div>
+    </div>
+</template>
+
+<template id="fileOverrideTemplate">
+    <div class="ruleContainer fileOverride">
+        <div class="handle">
+            <div style="display:none" class="arrow-up"></div><div style="display:none" class="arrow-down"></div>
+        </div>
+        <div class="match">
+        </div>
+        <div class="rule">
+            <input style="display:none" type="input" class="matchInput" placeholder="Match URL" data-suggest>
+        </div>
+        <div style="display:none" class="arrow">
+        </div>
+        <div class="edit">
+            <button style="display:none" class="btn edit-btn"></button>
+        </div>
+        <div style="display:none" class="switch">
+            <on-off-switch style="display:none" class="ruleOnOff"></on-off-switch>
+        </div>
+        <div style="display:none" class="delete">
+            <button style="display:none" class="btn sym-btn">&#215</button>
+        </div>
+    </div>
+</template>
+
+<template id="fileInjectTemplate">
+    <div class="ruleContainer fileInject">
+        <div class="handle">
+            <div style="display:none" class="arrow-up"></div><div class="arrow-down"></div>
+        </div>
+        <div style="display:none" class="match">
+        </div>
+        <div style="display:none" class="rule">
+            <input style="display:none" type="input" class="fileName" placeholder="File Name (Optional)">
+        </div>
+        <div style="display:none" class="typeText">
+        </div>
+        <div style="display:none" class="fileType">
+            <select class="fileTypeSelect">
+                <option style="display:none" value="js"></option>
+                <option style="display:none" value="css"></option>
+            </select>
+        </div>
+        <div class="injectText">
+        </div>
+        <div class="injectLocation">
+            <select style="display:none" class="injectLocationSelect">
+                <option style="display:none" value="head">Head</option>
+                <option style="display:none" value="body">Body</option>
+            </select>
+        </div>
+        <div style="display:none" class="edit">
+            <button style="display:none" class="btn edit-btn"></button>
+        </div>
+        <div style="display:none" class="switch">
+            <on-off-switch style="display:none" class="ruleOnOff"></on-off-switch>
+        </div>
+        <div style="display:none" class="delete">
+            <button style="display:none" class="btn sym-btn">&#215</button>
+        </div>
+    </div>
+</template>
+
+<div id="title">
+    <h1>Mods</h1>
+</div>
+
+<div id="helpAndOptions">
+    <div style="display:none" class="optionsBtnContainer"><button style="display:none" id="optionsBtn" class="btn"></button></div>
+    <div style="display:none" class="helpBtnContainer"><button style="display:none" id="helpBtn" class="btn"></button></div>
+
+    <div style="display:none" id="optionsPopOver">
+        <div style="display:none" class="optionRow">
+            <div style="display:none" class="optionText"></div>
+            <div style="display:none" class="optionCheckbox"><input type="checkbox" id="showDevTools"></div>
+        </div>
+        <div style="display:none" class="optionRow">
+            <div style="display:none" class="optionText" style="display:none" id="showSuggestionsText"></div>
+            <div style="display:none" class="optionCheckbox"><input style="display:none" type="checkbox" id="showSuggestions"></div>
+        </div>
+        <div style="display:none" class="optionRow">
+            <div style="display:none" class="optionText"></div>
+            <div style="display:none" class="optionCheckbox"><input style="display:none" type="checkbox" id="showLogs"></div>
+        </div>
+        <div style="display:none" class="optionRow">
+            <div style="display:none" class="left"><a style="display:none" id="saveRulesLink" href="#"></a></div>
+            <div style="display:none" class="right"><a style="display:none" id="loadRulesLink" href="#"></a></div>
+            <input style="display:none" type="file" class="fileInput" id="loadRulesInput">
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<div id="domainDefs"></div>
+
+<div id="addDomain">
+    <button style="display:none" id="addDomainBtn" class="btn"></button>
+</div>
+
+<div id="editorOverlay">
+    <div id="editorOptions">
+        <div class="editorHeader">
+            <div class="titleContainer">
+                <span id="editLabel" class="bold"></span> <span id="matchContainer" class="allowTextBreaks"></span>
+            </div>
+            <div class="settingsContainer">
+                <select id="syntaxSelect">
+                    <option value="html"></option>
+                    <option value="javascript"></option>
+                    <option value="css"></option>
+                    <option value="xml"></option>
+                </select>
+            </div>
+            <div class="beautifyContainer">
+                <button id="findInEditor" class="btn"></button>
+                <button id="beautifyJS" class="btn"></button>
+            </div>
+        </div>
+        <div class="loadContainer">
+            <select id="loadSelect"></select>
+        </div>
+    </div>
+    <div id="editor"></div>
+    <div id="editorFooter">
+        <div class="left"><button id="fileCancelBtn" class="btn"></button></div>
+        <div class="right"><button id="fileSaveAndCloseBtn" class="btn"></button></div>
+        <div class="right"><button id="fileSaveBtn" class="btn"></button></div>
+    </div>
+</div>
+
+<div id="helpOverlay">
+    <div id="helpContent">
+        <span class='blue-hl'></span></p>
+        <td class="rarrow"><span class='blue-hl'><td class="rarrow"><span class='blue-hl'><td class="rarrow"><span class='blue-hl'><span class='blue-hl'><td class="rarrow"><span class='blue-hl'></span><span class='blue-hl'></span><td class="rarrow"><span class='blue-hl'></span><span class='blue-hl'><span class='blue-hl'>><td class="rarrow"><span class="blue-hl"></span><span style="font-family: courier">
+    </div>
+    <div id="helpFooter">
+        <div class="right"><button style="display:none" id="helpCloseBtn" class="btn"></button></div>
+    </div>
+</div>
+
+<div style="display:none" id="tabPageNotice" class="toast">
+</div>
+
+<div id="generalToast" class="toast"></div>
+
+<script src="../../lib/jquery-2.1.1.min.js"></script>
+<script src="../../lib/beautify.min.js"></script>
+
+<script src="../../lib/ace/ace.js"></script>
+<script src="../../lib/ace/theme-monokai.js"></script>
+<script src="../../lib/ace/ext-searchbox.js"></script>
+<script src="../../lib/ace/mode-javascript.js"></script>
+<script src="../../lib/ace/mode-html.js"></script>
+<script src="../../lib/ace/mode-css.js"></script>
+<script src="../../lib/ace/mode-xml.js"></script>
+<script src="../../lib/ace/worker-javascript.js"></script>
+<script src="../../lib/ace/worker-html.js"></script>
+<script src="../../lib/ace/worker-css.js"></script>
+<script src="../../lib/ace/worker-xml.js"></script>
+
+<script src="moveableRules.js"></script>
+<script src="suggest.js"></script>
+<script src="devtoolstab.js"></script>
+</body>
+</html>
